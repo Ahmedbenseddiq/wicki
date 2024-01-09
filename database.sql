@@ -3,36 +3,37 @@ CREATE DATABASE wicki ;
 USE wicki ;
 
 CREATE TABLE admin (
-    admin_id INT PRIMARY KEY,
+    admin_id INT PRIMARY KEY AUTO_INCREMENT,
     admin_name VARCHAR(50),
     email VARCHAR(50),
-    password VARCHAR(100) ,
+    password VARCHAR(100) 
     
 );
 
 CREATE TABLE author (
-    author_id INT PRIMARY KEY,
+    author_id INT PRIMARY KEY AUTO_INCREMENT,
     author_name VARCHAR(50),
     email VARCHAR(50),
-    password VARCHAR(100) ,
+    password VARCHAR(100) 
 );
 
 
 CREATE TABLE category (
-    category_id INT PRIMARY KEY,
+    category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(50),
     creation_date DATE
 );
 
 CREATE TABLE tag (
-    tag_name VARCHAR(50) PRIMARY KEY
+    tag_id INT PRIMARY KEY AUTO_INCREMENT,
+    tag_name VARCHAR(50) 
 );
 
 CREATE TABLE article (
-    article_id INT PRIMARY KEY,
+    article_id INT PRIMARY KEY AUTO_INCREMENT,
     article_name VARCHAR(50),
     creation_date DATE,
-    content TEXT,*
+    content TEXT,
     category_id INT,
     FOREIGN KEY (category_id) REFERENCES category(category_id),
     author_id INT,
@@ -43,7 +44,7 @@ CREATE TABLE article (
 CREATE TABLE article_tag (
     article_id INT,
     FOREIGN KEY (article_id) REFERENCES article(article_id),
-    tag_name VARCHAR(50),
-    FOREIGN KEY (tag_name) REFERENCES tag(tag_name)
+    tag_id INT,
+    FOREIGN KEY (tag_id) REFERENCES tag(tag_id)
 );
 
