@@ -2,6 +2,7 @@
 require_once 'db_config.php';
 
 class Database {
+
     private static $instance;
     private $connection;
 
@@ -21,3 +22,4 @@ class Database {
         return $this->connection;
     }
 }
+

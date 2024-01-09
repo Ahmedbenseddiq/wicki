@@ -14,9 +14,6 @@ class Category{
 
 
 
-    
-    
-
     /**
      * Get the value of category_id
      */ 

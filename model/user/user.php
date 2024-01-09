@@ -6,13 +6,14 @@ class User{
         private $name;
         private $email;
         private $password;
+        private $role;
 
-        public function _construct($id,$name,$email,$password){
+        public function _construct($id,$name,$email,$password,$role){
             $this->id = $id;
             $this->name = $name;
             $this->email = $email;
             $this->password = $password;
-            
+            $this->role = $role;
         }
 
 
@@ -90,4 +91,24 @@ class User{
                 return $this;
         }
         
+
+        /**
+         * Get the value of role
+         */ 
+        public function getRole()
+        {
+                return $this->role;
+        }
+
+        /**
+         * Set the value of role
+         *
+         * @return  self
+         */ 
+        public function setRole($role)
+        {
+                $this->role = $role;
+
+                return $this;
+        }
 }
