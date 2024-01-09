@@ -41,7 +41,7 @@ class TagDAO {
             return $tag;
         }
 
-        return null; // If tag not found
+        return null;
     }
 
     public function create_tag($tag_name) {
@@ -50,7 +50,7 @@ class TagDAO {
         $stmt->bindParam(':tag_name', $tag_name);
         $stmt->execute();
 
-        return $this->db->lastInsertId(); // Return the ID of the inserted tag
+        return $this->db->lastInsertId();
     }
 
     public function update_tag(Tag $tag) {
@@ -60,7 +60,7 @@ class TagDAO {
         $stmt->bindParam(':tag_id', $tag->getTag_id());
         $stmt->execute();
 
-        return true; // Return true if update successful
+        return true; 
     }
 
     public function delete_tag($tag_id) {
@@ -69,6 +69,6 @@ class TagDAO {
         $stmt->bindParam(':tag_id', $tag_id);
         $stmt->execute();
 
-        return $stmt->rowCount() > 0; // Return true if any rows were affected
+        return $stmt->rowCount() > 0; 
     }
 }
