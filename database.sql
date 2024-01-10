@@ -4,7 +4,7 @@ USE wiki;
 
 CREATE TABLE Categories (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
-    category_name VARCHAR(255) NOT NULL
+    category_name VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE Tags (
@@ -41,3 +41,6 @@ CREATE TABLE Wiki_Tags (
     FOREIGN KEY (wiki_id) REFERENCES Wikis(wiki_id),
     FOREIGN KEY (tag_id) REFERENCES Tags(tag_id)
 );
+
+ALTER TABLE categories
+ADD creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP; 

@@ -7,23 +7,28 @@ require_once '../connexion.php';
 
 class CategoryController {
     private $categoryDAO;
-    private $db;
 
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
-        $this->categoryDAO = new CategoryDAO($this->db);
+        $this->categoryDAO = new CategoryDAO();
     }
 
     public function loadHomePage() {
         $categories = $this->categoryDAO->get_all_categories();
+        $errorMessage = null;
 
-        if ($categories !== null && !empty($categories)) {
-            
-            include '../views/homePage.php'; 
-        } else {
-            
+        if ($categories === null || empty($categories)) {
             $errorMessage = "No categories found.";
-            include '../views/homePage.php'; 
         }
+
+        // Pass data to the view
+        $this->renderView('homePage.php', compact('categories', 'errorMessage'));
+    }
+
+    private function renderView($viewFile, $data) {
+        extract($data); // Extract variables from the associative array
+        include '../views/' . $viewFile;
     }
 }
+
+
+

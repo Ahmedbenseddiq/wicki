@@ -94,24 +94,24 @@
 
 
 
-      <section class="pt-5" id="marketing">
-        <div class="container">
-            <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
-            <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
-            <div class="row">
+      <<section class="pt-5" id="marketing">
+    <div class="container">
+        <!-- Your existing HTML structure -->
+
+        <div class="row">
+            <?php if (isset($errorMessage) && $errorMessage !== null): ?>
+                <p><?php echo $errorMessage; ?></p>
+            <?php elseif (isset($categories) && is_array($categories) && !empty($categories)): ?>
                 <?php foreach ($categories as $category): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card"><img class="card-img-top" src="../assets/img/category/<?php echo $category->getPicture(); ?>" alt="" />
-                            <div class="card-body ps-0">
-                                <p class="text-secondary"><span class="ms-1"><?php echo $category->getCreationDate(); ?></span></p>
-                                <h3 class="fw-bold"><?php echo $category->getCategoryName(); ?></h3>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Display categories -->
+                    <!-- ... -->
                 <?php endforeach; ?>
-            </div>
-        </div> 
-    </section>
+            <?php else: ?>
+                <p>No categories found.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>
 
 
 
