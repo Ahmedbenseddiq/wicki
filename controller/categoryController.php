@@ -1,26 +1,29 @@
 <?php
+// CategoryController.php
 
-// Assume you have a CategoryController.php file within your controllers folder
+require_once '../models/category/categoryDAO.php'; 
 
-require_once '../models/CategoryDAO.php'; // Adjust the path if needed
+require_once '../connexion.php'; 
 
 class CategoryController {
     private $categoryDAO;
+    private $db;
 
     public function __construct() {
-        $this->categoryDAO = new CategoryDAO();
+        $this->db = Database::getInstance()->getConnection();
+        $this->categoryDAO = new CategoryDAO($this->db);
     }
 
-    public function displayAllCategories() {
+    public function loadHomePage() {
         $categories = $this->categoryDAO->get_all_categories();
 
-        // Assuming you have a view file named 'categories_view.php' in your views folder
-        // You can pass $categories to your view for display
-        include '../views/categories_view.php'; // Adjust the path if needed
+        if ($categories !== null && !empty($categories)) {
+            
+            include '../views/homePage.php'; 
+        } else {
+            
+            $errorMessage = "No categories found.";
+            include '../views/homePage.php'; 
+        }
     }
 }
-
-// Usage in your application:
-
-$categoryController = new CategoryController();
-$categoryController->displayAllCategories();

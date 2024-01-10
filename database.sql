@@ -1,20 +1,17 @@
-CREATE DATABASE wicki ;
+CREATE DATABASE wiki;
 
-USE wicki ;
-
+USE wiki;
 
 CREATE TABLE Categories (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
     category_name VARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE Tags (
     tag_id INT PRIMARY KEY AUTO_INCREMENT,
-    tag_name VARCHAR(255) NOT NULL UNIQUE
+    tag_name VARCHAR(255) NOT NULL UNIQUE,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
 
 CREATE TABLE Users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -24,7 +21,6 @@ CREATE TABLE Users (
     role ENUM('admin', 'author') DEFAULT 'author',
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 
 CREATE TABLE Wikis (
     wiki_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -37,7 +33,6 @@ CREATE TABLE Wikis (
     FOREIGN KEY (author_id) REFERENCES Users(user_id),
     FOREIGN KEY (category_id) REFERENCES Categories(category_id)
 );
-
 
 CREATE TABLE Wiki_Tags (
     wiki_id INT,
