@@ -1,6 +1,7 @@
+
 <?php
 
-require_once '../connexion.php'; 
+include_once 'model\connexion.php'; 
 require_once 'category.php'; 
 
 
@@ -8,14 +9,16 @@ class CategoryDAO {
     private $db;
 
     public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+        global $db; 
+        $this->db = $db;
     }
-
+    
     public function get_all_categories() {
         $query = "SELECT * FROM categories";
         $stmt = $this->db->query($query);
         $stmt->execute();
         $categories_data = $stmt->fetchAll();
+        
         $categories = [];
         foreach ($categories_data as $category_data) {
             $category = new Category(
@@ -26,10 +29,9 @@ class CategoryDAO {
             $categories[] = $category;
         }
         return $categories;
-        // print_r($categories);
-        // die();
     }
-
+    
+    
     public function get_category_by_id($category_id) {
         $query = "SELECT * FROM categories WHERE category_id = :category_id";
         $stmt = $this->db->prepare($query);
@@ -38,11 +40,7 @@ class CategoryDAO {
         $category_data = $stmt->fetch();
 
         if ($category_data) {
-            $category = new Category(
-                $category_data["category_id"],
-                $category_data["category_name"],
-                $category_data["creation_date"]
-            );
+            $category = new Category($category_data["category_id"], $category_data["category_name"], $category_data["creation_date"]);
             return $category;
         }
 

@@ -10,18 +10,10 @@
 
     <title>home</title>
 
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicons/favicon.png">
-    <link rel="manifest" href="../assets/img/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../assets/img/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
 
 
-    <link href="../assets/css/theme.css" rel="stylesheet" />
+    <link href="assets\css\theme.css" rel="stylesheet" />
 
   </head>
 
@@ -52,7 +44,7 @@
               <p class="mb-6 lead text-secondary">Empowering growth through shared wisdom,<br class="d-none d-xl-block" />fostering collaboration, and expanding<br class="d-none d-xl-block" />horizons for a brighter tomorrow.</p>
               <div class="text-center text-md-start"><a class="btn btn-dark me-3 btn-lg" href="#!" role="button">Get started</a></div>
             </div>
-            <div class="col-md-6 text-end"><img class="pt-7 pt-md-0 img-fluid" src="../assets/img/hero/hero-img.jpg" alt="" /></div>
+            <div class="col-md-6 text-end"><img class="pt-7 pt-md-0 img-fluid" src="assets\img\hero\hero-img.jpg" alt="" /></div>
           </div>
         </div>
       </section>
@@ -61,26 +53,26 @@
 
       <section class="pt-5 pt-md-9 mb-6" id="feature">
 
-        <div class="bg-holder z-index--1 bottom-0 d-none d-lg-block" style="background-image:url(../assets/img/services/shape.png);opacity:.5;">
+        <div class="bg-holder z-index--1 bottom-0 d-none d-lg-block" style="background-image:url(assets\img\services\shape.png);opacity:.5;">
         </div>
         <!--/.bg-holder-->
 
         <div class="container">
           <h1 class="fs-9 fw-bold mb-4 text-center">Enriching minds, we embody<br class="d-none d-xl-block" /> excellence by sharing knowledge.</h1>
           <div class="row">
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="../assets/img/services/icon1.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon1.png" width="75" alt="Feature" />
               <h4 class="mb-3">First click tests</h4>
               <p class="mb-0 fw-medium text-secondary">akin to exploring a vast knowledge realm</p>
             </div>
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="../assets/img/services/icon2.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon2.png" width="75" alt="Feature" />
               <h4 class="mb-3">Design surveys</h4>
               <p class="mb-0 fw-medium text-secondary">Sports betting,lottery and bingo playing for the fun</p>
             </div>
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="../assets/img/services/icon3.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon3.png" width="75" alt="Feature" />
               <h4 class="mb-3">Preference tests</h4>
               <p class="mb-0 fw-medium text-secondary">The Myspace page defines the individual.</p>
             </div>
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="../assets/img/services/icon4.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon4.png" width="75" alt="Feature" />
               <h4 class="mb-3">Five second tests</h4>
               <p class="mb-0 fw-medium text-secondary">Personal choices and the overall personality of the person.</p>
             </div>
@@ -94,24 +86,25 @@
 
 
 
-      <<section class="pt-5" id="marketing">
-    <div class="container">
-        <!-- Your existing HTML structure -->
-
-        <div class="row">
-            <?php if (isset($errorMessage) && $errorMessage !== null): ?>
-                <p><?php echo $errorMessage; ?></p>
-            <?php elseif (isset($categories) && is_array($categories) && !empty($categories)): ?>
+      <section class="pt-5" id="marketing">
+        <div class="container">
+            <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
+            <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
+            <div class="row">
                 <?php foreach ($categories as $category): ?>
-                    <!-- Display categories -->
-                    <!-- ... -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img class="card-img-top" src="../assets/img/category/<?php echo $category->getPicture(); ?>" alt="" />
+                            <div class="card-body ps-0">
+                                <p class="text-secondary"><span class="ms-1"><?php echo $category->getCreationDate(); ?></span></p>
+                                <h3 class="fw-bold"><?php echo $category->getCategoryName(); ?></h3>
+                            </div>
+                        </div>
+                    </div>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <p>No categories found.</p>
-            <?php endif; ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
 
@@ -127,7 +120,7 @@
               <p class="mt-5">&copy; 2024 Wikizone Inc </p>
             </div>
             <div class="col-12 col-md-auto">
-              <div class="col-lg-3 col-md-6 mb-4 mb-md-6 mb-lg-0 mb-sm-2 order-1 order-md-1 order-lg-1"><img class="mb-4" src="../assets/img/logo1.png" width="184" alt="" /></div>
+              <div class="col-lg-3 col-md-6 mb-4 mb-md-6 mb-lg-0 mb-sm-2 order-1 order-md-1 order-lg-1"><img class="mb-4" src="assets\img\logo1.png" width="184" alt="" /></div>
             </div>
           </div>
         </div>
@@ -141,7 +134,7 @@
    
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     
-    <script src="../assets/js/theme.js"></script>
+    <script src="assets\js\theme.js"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Volkhov:wght@700&amp;display=swap" rel="stylesheet">
   </body>

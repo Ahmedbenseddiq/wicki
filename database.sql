@@ -44,3 +44,8 @@ CREATE TABLE Wiki_Tags (
 
 ALTER TABLE categories
 ADD creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP; 
+
+ALTER TABLE categories
+ADD image VARCHAR(255); 
+
+
