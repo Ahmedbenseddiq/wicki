@@ -1,87 +1,54 @@
 <?php
-require_once '../connexion.php';    
-require_once 'user.php'; 
-
-class UserDAO {
+require_once('../config/database.php');
+require_once('class/user.php');
+class UserDAO{
     private $db;
+    private User $user;
 
-    public function __construct() {
-        $this->db = Database::getInstance()->getConnection();
+    public function __construct()
+    {
+        $this->db = Database::getInstance();
     }
-
-    public function get_all_users() {
-        $query = "SELECT * FROM users";
-        $stmt = $this->db->query($query);
+    public function Signup($firstname, $lastname, $email, $pass){
+        $stmt = $this->db->prepare("INSERT INTO users (nom, prenom, email, pass) VALUES (:nom, :prenom, :email, :pass)");
+        $stmt->bindParam(":nom", $firstname);
+        $stmt->bindParam(":prenom", $lastname);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":pass", $pass);
         $stmt->execute();
-        $users_data = $stmt->fetchAll();
-        $users = [];
-        foreach ($users_data as $user_data) {
-            $user = new User(
-                $user_data["id"],
-                $user_data["name"],
-                $user_data["email"],
-                $user_data["password"],
-                $user_data["role"]
-            );
-            $users[] = $user;
+    }
+    public function verifyUser($email,$pass){
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email',$email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (password_verify($pass, $result['pass'])){
+
+            return true;
+
+        }else{
+            return false;
         }
-        return $users;
     }
-
-    public function get_user_by_id($id) {
-        $query = "SELECT * FROM users WHERE id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
+    public function Get_user_id($email){
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(":email",$email);
         $stmt->execute();
-        $user_data = $stmt->fetch();
-
-        if ($user_data) {
-            $user = new User(
-                $user_data["id"],
-                $user_data["name"],
-                $user_data["email"],
-                $user_data["password"],
-                $user_data["role"]
-            );
-            return $user;
-        }
-
-        return null; // If user not found
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['user_id'];
     }
-
-    public function create_user($name, $email, $password, $role) {
-        $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':role', $role);
+    public function Get_user_role($email){
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(":email",$email);
         $stmt->execute();
-
-        return $this->db->lastInsertId(); // Return the ID of the inserted user
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['role'];
     }
-
-    public function update_user(User $user) {
-        $query = "UPDATE users SET name = :name, email = :email, password = :password, role = :role WHERE id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':name', $user->getName());
-        $stmt->bindParam(':email', $user->getEmail());
-        $stmt->bindParam(':password', $user->getPassword());
-        $stmt->bindParam(':role', $user->getRole());
-        $stmt->bindParam(':id', $user->getId());
+    public function CountUsers(){
+        $stmt = $this->db->query("SELECT count(user_id) as count FROM `users`;");
         $stmt->execute();
-
-        return true; // Return true if update successful
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result; 
     }
-
-    public function delete_user($id) {
-        $query = "DELETE FROM users WHERE id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-
-        return $stmt->rowCount() > 0; 
+    
 }
-
-}
-

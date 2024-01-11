@@ -1,80 +1,35 @@
-
 <?php
-
-include_once 'model\connexion.php'; 
-require_once 'category.php'; 
-
-
-class CategoryDAO {
+require_once('../config/database.php');
+require_once('class/category.php');
+class CategoryDAO{
     private $db;
-
-    public function __construct() {
-        global $db; 
-        $this->db = $db;
-    }
     
-    public function get_all_categories() {
-        $query = "SELECT * FROM categories";
-        $stmt = $this->db->query($query);
-        $stmt->execute();
-        $categories_data = $stmt->fetchAll();
+    private Category $category;
+
+    public function __construct(){
+        $this->db = Database::getInstance();
         
-        $categories = [];
-        foreach ($categories_data as $category_data) {
-            $category = new Category(
-                $category_data["category_id"],
-                $category_data["category_name"],
-                $category_data["creation_date"]
-            );
-            $categories[] = $category;
-        }
-        return $categories;
     }
-    
-    
-    public function get_category_by_id($category_id) {
-        $query = "SELECT * FROM categories WHERE category_id = :category_id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':category_id', $category_id);
+
+    public function get_cats(){
+        $stmt = $this->db->query("SELECT * FROM categories;");
         $stmt->execute();
-        $category_data = $stmt->fetch();
-
-        if ($category_data) {
-            $category = new Category($category_data["category_id"], $category_data["category_name"], $category_data["creation_date"]);
-            return $category;
-        }
-
-        return null;
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function insertCat($name,$image){
+       $stmt = $this->db->prepare("INSERT INTO categories (cat_name,image) VALUE (:name,:img)");
+       $stmt->bindParam(":name",$name);
+       $stmt->bindParam(":img",$image);
+       $stmt->execute(); 
     }
 
-    public function create_category($category_name, $creation_date) {
-        $query = "INSERT INTO categories (category_name, creation_date) VALUES (:category_name, :creation_date)";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':category_name', $category_name);
-        $stmt->bindParam(':creation_date', $creation_date);
+    public function countCategories(){
+        $stmt = $this->db->query("SELECT count(cat_id) as count FROM `categories`;");
         $stmt->execute();
-
-        return $this->db->lastInsertId(); 
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result; 
     }
 
-    public function update_category(Category $category) {
-        $query = "UPDATE categories SET category_name = :category_name, creation_date = :creation_date WHERE category_id = :category_id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':category_name', $category->getCategory_name());
-        $stmt->bindParam(':creation_date', $category->getCreation_date());
-        $stmt->bindParam(':category_id', $category->getCategory_id());
-        $stmt->execute();
 
-        return true; 
-    }
-
-    public function delete_category($category_id) {
-        $query = "DELETE FROM categories WHERE category_id = :category_id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':category_id', $category_id);
-        $stmt->execute();
-
-        return $stmt->rowCount() > 0; 
-    }
 }
-
