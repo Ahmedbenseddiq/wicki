@@ -4822,11 +4822,11 @@ fieldset:disabled .btn {
 }
 
 .navbar-light .navbar-brand {
-  color: #FF9900;
+  color: black;
 }
 
 .navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-  color: #FF9900;
+  color: grey;
 }
 
 .navbar-light .navbar-nav .nav-link {

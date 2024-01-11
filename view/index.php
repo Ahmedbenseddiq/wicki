@@ -1,3 +1,5 @@
+<?php require_once '../controller/displaycategoriesController.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
@@ -13,7 +15,7 @@
     <meta name="theme-color" content="#ffffff">
 
 
-    <link href="view/assets/css/theme.css" rel="stylesheet" />
+    <link href="assets/css/theme.css" rel="stylesheet" />
 
   </head>
 
@@ -32,7 +34,7 @@
                <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Authors</a></li>
              <!-- <li class="nav-item"><a class="nav-link" aria-current="page" href="#marketing">Resources</a></li> -->
             </ul>
-            <div class="d-flex ms-lg-4"><a class="btn btn-secondary-outline" href="">Sign In</a></div>
+            <div class="d-flex ms-lg-4"><a class="btn btn-secondary-outline" href="login.php">Sign In</a></div>
           </div>
         </div>
       </nav>
@@ -44,7 +46,7 @@
               <p class="mb-6 lead text-secondary">Empowering growth through shared wisdom,<br class="d-none d-xl-block" />fostering collaboration, and expanding<br class="d-none d-xl-block" />horizons for a brighter tomorrow.</p>
               <div class="text-center text-md-start"><a class="btn btn-dark me-3 btn-lg" href="#!" role="button">Get started</a></div>
             </div>
-            <div class="col-md-6 text-end"><img class="pt-7 pt-md-0 img-fluid" src="view/assets\img\hero\hero-img.jpg" alt="" /></div>
+            <div class="col-md-6 text-end"><img class="pt-7 pt-md-0 img-fluid" src="assets\img\hero\hero-img.jpg" alt="" /></div>
           </div>
         </div>
       </section>
@@ -53,26 +55,26 @@
 
       <section class="pt-5 pt-md-9 mb-6" id="feature">
 
-        <div class="bg-holder z-index--1 bottom-0 d-none d-lg-block" style="background-image:url(view/assets\img\services\shape.png);opacity:.5;">
+        <div class="bg-holder z-index--1 bottom-0 d-none d-lg-block" style="background-image:url(assets\img\services\shape.png);opacity:.5;">
         </div>
         <!--/.bg-holder-->
 
         <div class="container">
           <h1 class="fs-9 fw-bold mb-4 text-center">Enriching minds, we embody<br class="d-none d-xl-block" /> excellence by sharing knowledge.</h1>
           <div class="row">
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="view/assets\img\services\icon1.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon1.png" width="75" alt="Feature" />
               <h4 class="mb-3">First click tests</h4>
               <p class="mb-0 fw-medium text-secondary">akin to exploring a vast knowledge realm</p>
             </div>
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="view/assets\img\services\icon2.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon2.png" width="75" alt="Feature" />
               <h4 class="mb-3">Design surveys</h4>
               <p class="mb-0 fw-medium text-secondary">Sports betting,lottery and bingo playing for the fun</p>
             </div>
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="view/assets\img\services\icon3.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon3.png" width="75" alt="Feature" />
               <h4 class="mb-3">Preference tests</h4>
               <p class="mb-0 fw-medium text-secondary">The Myspace page defines the individual.</p>
             </div>
-            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="view/assets\img\services\icon4.png" width="75" alt="Feature" />
+            <div class="col-lg-3 col-sm-6 mb-2"> <img class="mb-3 ms-n3" src="assets\img\services\icon4.png" width="75" alt="Feature" />
               <h4 class="mb-3">Five second tests</h4>
               <p class="mb-0 fw-medium text-secondary">Personal choices and the overall personality of the person.</p>
             </div>
@@ -88,20 +90,20 @@
 
       <section class="pt-5" id="marketing">
     <div class="container">
-        <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
+        <h1 class="fw-bold fs-6 mb-3">Discover wikis</h1>
         <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
         <div class="row">
-              
+            <?php foreach ($categories as $category): ?>
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img class="card-img-top" alt="Category Image" />
                         <div class="card-body ps-0">
-                            aa
-                            <a href="" class="fw-bold">aa</a>
+                            <img src="assets/img/category/marketing01.png" class="card-img-top" alt="Category Image">
+                            <h5 class="fw-bold"><?php echo $category['cat_name']; ?></h5>
+                            <a href="category.php?id=<?php echo $category['cat_id']; ?>" class="fw-bold">Explore</a>
                         </div>
-                    </divz
+                    </div>
                 </div>
-              
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -121,7 +123,7 @@
               <p class="mt-5">&copy; 2024 Wikizone Inc </p>
             </div>
             <div class="col-12 col-md-auto">
-              <div class="col-lg-3 col-md-6 mb-4 mb-md-6 mb-lg-0 mb-sm-2 order-1 order-md-1 order-lg-1"><img class="mb-4" src="view/assets\img\logo1.png" width="184" alt="" /></div>
+              <div class="col-lg-3 col-md-6 mb-4 mb-md-6 mb-lg-0 mb-sm-2 order-1 order-md-1 order-lg-1"><img class="mb-4" src="assets\img\logo1.png" width="184" alt="" /></div>
             </div>
           </div>
         </div>

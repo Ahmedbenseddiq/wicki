@@ -1,12 +1,12 @@
 <?php
+
 require_once('../model/CategoryDAO.php');
+
 
 
 $categoryDAO = new CategoryDAO();
 
-// Fetch categories from the database
+// Fetch all categories
 $categories = $categoryDAO->get_cats();
+// var_dump($categories);
 
-
-include('../view/categories.php');
-?>

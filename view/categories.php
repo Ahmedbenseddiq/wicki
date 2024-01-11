@@ -1,3 +1,8 @@
+<?php
+require_once '../controller/displaycategoriesController.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
@@ -30,7 +35,9 @@
               <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Write wicki</a></li>
 
             </ul>
-            <div class="d-flex ms-lg-4"><a class="btn btn-secondary-outline" href="">Log out</a></div>
+            <div class="d-flex ms-lg-4">
+              <a class="btn btn-secondary-outline" href="index.php">Log out</a>
+            </div>
           </div>
         </div>
       </nav>
@@ -50,24 +57,24 @@
 
      
       <section class="pt-5" id="marketing">
-      <div class="container">
-    <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
-    <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
-    <div class="row">
-    <?php foreach ($categories as $category): ?>
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body ps-0">
-                    <h5 class="fw-bold"><?php echo $category['name']; ?></h5>
-                    <a href="category.php?id=<?php echo $category['id']; ?>" class="fw-bold">Explore</a>
+    <div class="container">
+        <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
+        <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
+        <div class="row">
+            <?php foreach ($categories as $category): ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body ps-0">
+                            <img src="assets/img/category/marketing01.png" class="card-img-top" alt="Category Image">
+                            <h5 class="fw-bold"><?php echo $category['cat_name']; ?></h5>
+                            <a href="category.php?id=<?php echo $category['cat_id']; ?>" class="fw-bold">Explore</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
         </div>
-    <?php endforeach; ?>
     </div>
-</div>
 </section>
-
 
 
 
