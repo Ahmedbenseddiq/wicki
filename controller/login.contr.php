@@ -1,43 +1,51 @@
 <?php
 require_once('../model/UserDAO.php');
 
-$user = new UserDAO();
+// var_dump($_POST);
+$userDAO = new UserDAO();
 
-if(isset($_POST['login'])){
+
+if(isset($_POST['login'])) {
+
     $email = $_POST['email'];
-    $pass = $_POST['pass'];
-    $errors = array();
+    $password = $_POST['password'];
+
+    // Add pattern checks
     $patternEmail = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
     $patternPassword = '/^.{4,}$/';
-    if (!preg_match($patternEmail, $email)) {
-        array_push($errors, "Email is not valid.");
-    }
-    if (!preg_match($patternPassword, $pass)) {
-        array_push($errors, "Please use at least 4 characters");
-    }
-    if (count($errors) > 0) {
 
+    $errors = [];
+
+    // Validate email
+    if (!preg_match($patternEmail, $email)) {
+        $errors[] = "Email is not valid.";
+    }
+
+    // Validate password
+    if (!preg_match($patternPassword, $password)) {
+        $errors[] = "Please use at least 4 characters for the password.";
+    }
+
+    // If there are no errors, proceed with authentication
+    if (empty($errors)) {
+        // Validate user input against the database using the UserDAO
+        $isValidUser = $userDAO->verifyUser($email, $password);
+
+        if($isValidUser) {
+            // User authentication successful
+            // Redirect to categories.php or any other page you want
+            header('Location: ../view/categories.php');
+            exit();
+        } else {
+            // User authentication failed
+            // Display an error message on the login page
+            echo "Wrong email or password. Please try again.";
+        }
+    } else {
+        // Display errors
         foreach ($errors as $error) {
             echo '<div class="bg-red-500 rounded-xl text-white p-2 my-2">' . $error . '</div>';
-       
         }
-        
-}else{
-    $login = $user->verifyUser($email,$pass);
-    $role = $user->Get_user_role($email);
-    if($login == true){
-        session_start();
-        $_SESSION['email'] = $email;
-        $_SESSION['role'] = $role;
-        $_SESSION['user_logged_in'] = true;
-        
-        header("location:../view/categories.php");
-    }else{
-        header("location:../view/login");
     }
 }
-
-
-    
-    
-}
+?>

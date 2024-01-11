@@ -3,7 +3,7 @@
 define("host","localhost");
 define("user",'root');
 define("pass",'');
-define("db",'wiki');
+define("db",'wikis');
 
 class Database{
     private $host ;

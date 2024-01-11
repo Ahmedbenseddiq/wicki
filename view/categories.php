@@ -50,23 +50,22 @@
 
      
       <section class="pt-5" id="marketing">
-    <div class="container">
-        <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
-        <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
-        <div class="row">
-              
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img class="card-img-top" src="" alt="Category Image" />
-                        <div class="card-body ps-0">
-                            aaaa
-                            <a href=" class="fw-bold"></a>
-                        </div>
-                    </div>
+      <div class="container">
+    <h1 class="fw-bold fs-6 mb-3">Discover new categories</h1>
+    <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
+    <div class="row">
+    <?php foreach ($categories as $category): ?>
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body ps-0">
+                    <h5 class="fw-bold"><?php echo $category['name']; ?></h5>
+                    <a href="category.php?id=<?php echo $category['id']; ?>" class="fw-bold">Explore</a>
                 </div>
-             
+            </div>
         </div>
+    <?php endforeach; ?>
     </div>
+</div>
 </section>
 
 

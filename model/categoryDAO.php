@@ -11,12 +11,14 @@ class CategoryDAO{
         
     }
 
-    public function get_cats(){
+    public function get_cats() {
         $stmt = $this->db->query("SELECT * FROM categories;");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
+
     public function insertCat($name,$image){
        $stmt = $this->db->prepare("INSERT INTO categories (cat_name,image) VALUE (:name,:img)");
        $stmt->bindParam(":name",$name);
