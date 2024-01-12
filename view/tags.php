@@ -1,5 +1,5 @@
 <?php
-    include_once '../controller/displaycategoriesController.php';
+    include_once '../controller/displaytags.php';
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Categories</title>
+    <title>Tags</title>
 
     
     
@@ -45,7 +45,7 @@
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="tags.php">
+                <a class="nav-link" href="admin.php">
                     <span>Categories </span></a>
             </li>
             <hr class="sidebar-divider my-0">
@@ -142,64 +142,46 @@
 
 
                     <div class="container m-auto">
-                    <form class="m-auto w-75" method="post" action="../controller/category.contr.php" enctype="multipart/form-data">
+                    <form class="m-auto w-75" method="post" action="../controller/tag.contr.php" enctype="multipart/form-data">
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="categoryName">Category name</label>
-                            <input type="text" id="categoryName" class="form-control" name="catName" required>
+                            <label class="form-label" for="categoryName">Tag name</label>
+                            <input type="text" id="categoryName" class="form-control" name="tagName" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="uploadedFile" class="form-label">Upload Image</label>
-                            <input class="form-control" type="file" id="uploadedFile" name="catImg" required accept="image/*">
-                        </div>
+                       
 
-                        <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Category</button>
+                        <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Tag</button>
                     </form>
 
-                    <table class="table m-auto  w-75">
+                    <table class="table m-auto w-75">
                         <thead>
                             <div class="d-flex justify-content-center" style="width: 45rem; margin-top: 65px;">
-                                <h3 class="mb-3">Category list</h3>
+                                <h3>Tag list</h3>
                             </div>
                             <tr>
-                                <!-- <th scope="col">#</th> -->
-                                <th scope="col">Category Name</th>
-                                <th scope="col">Image</th>
+                                <th scope="col">Tag Name</th>
                                 <th scope="col">Management</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($categories as $category): ?>
+                            <?php foreach ($tags as $tag): ?>
                                 <tr>
-                                    <!-- <th scope="row"><?= $category['cat_id']; ?></th> -->
-                                    <td><?= $category['cat_name']; ?></td>
+                                    <td><?= $tag['tag_name']; ?></td>
                                     <td>
-                                        <?php
-                                        
-                                                    if (!empty($category['image'])) {
-                                                        $imageType = 'image/jpeg';  // Change this based on your image type
-                                                        $base64Image = base64_encode($category['image']);
-                                                        echo '<img src="data:' . $imageType . ';base64,' . $base64Image . '" alt="Category Image" style="max-width: 100px; max-height: 100px;">';
-                                                    } else {
-                                                        echo 'No Image';
-                                                    }
-                                                    ?>
-                                    </td>
-                                    <td>
-                                                
                                         <div class="d-flex">
-                                            <form method="post" action="../controller/deleteCategory.php" class="mr-2">
-                                                <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                                <button type="submit" name="delete_category" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-                                            </form>
-                                        
-                                            <a href="../view/modifyCategory.php?category_id=<?= $category['cat_id']; ?>" class="btn btn-success">Modify</a>
+                                        <form method="post" action="../controller/deleteTag.php" class="mr-2">
+                                            <input type="hidden" name="tag_id" value="<?= $tag['tag_id']; ?>">
+                                            <button type="submit" name="delete_tag" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this tag?')">Delete</button>
+                                        </form>
+                                        <a href="../view/modifyTag.php?tag_id=<?= $tag['tag_id']; ?>" class="btn btn-success">Modify</a>
                                         </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
+
                 </div>
 
 

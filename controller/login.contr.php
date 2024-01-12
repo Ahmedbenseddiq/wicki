@@ -16,29 +16,26 @@ if(isset($_POST['login'])) {
 
     $errors = [];
 
-    // Validate email
+   
     if (!preg_match($patternEmail, $email)) {
         $errors[] = "Email is not valid.";
     }
 
-    // Validate password
     if (!preg_match($patternPassword, $password)) {
         $errors[] = "Please use at least 4 characters for the password.";
     }
 
-    // If there are no errors, proceed with authentication
+
     if (empty($errors)) {
-        // Validate user input against the database using the UserDAO
+
         $isValidUser = $userDAO->verifyUser($email, $password);
 
         if($isValidUser) {
-            // User authentication successful
-            // Redirect to categories.php or any other page you want
-            header('Location: ../view/categories.php');
+
+            header('Location: ../view/author.php');
             exit();
         } else {
-            // User authentication failed
-            // Display an error message on the login page
+
             echo "Wrong email or password. Please try again.";
         }
     } else {

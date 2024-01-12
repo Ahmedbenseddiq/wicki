@@ -1,18 +1,33 @@
 <?php
-// modifyCategoryController.php
+require_once('../model/CategoryDAO.php');
 
 
-$category_id = isset($_GET['category_id']) ? $_GET['category_id'] : null;
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modify_category'])) {
 
-// Check if the category_id is provided
-if ($category_id !== null) {
-    // Fetch category details
-    $category = get_cats($category_id);
 
-    // Load the view
-    include('../views/modifyCategoryView.php');
+
+    $categoryId = $_POST['category_id'];
+    $newCategoryName = htmlspecialchars($_POST['catName']);
+    
+
+    $newImageData = get_cats($_FILES['catImg']);
+
+
+    $categoryDAO = new CategoryDAO();
+
+ 
+    $success = $categoryDAO->updateCat($categoryId, $newCategoryName, $newImageData);
+
+    if ($success) {
+        // Redirect to a success page
+        header('Location: ../view/successPage.php');
+        exit();
+    } else {
+        // Handle the case where modification fails (redirect or show an error)
+        echo "Failed to modify the category.";
+    }
 } else {
-    // Handle the case where category_id is not provided
-    echo "Category ID is missing.";
+    // Handle other cases or redirect to an error page
+    echo "Invalid request.";
 }
 ?>

@@ -43,12 +43,12 @@
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="tags.php">
+                <a class="nav-link" href="admin.php">
                     <span>Categories </span></a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="categories.php">
+                <a class="nav-link" href="tags.php">
                     <span> Tags</span></a>
             </li>
             <hr class="sidebar-divider my-0">
@@ -139,15 +139,15 @@
                     </div>
 
 
-                    <div class="container m-auto">
+                    <div class="container w-75 m-auto">
 
                     
                     <form method="post" action="../controller/modifyCategory.php">
-                        <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
+                        <input type="hidden" name="category_id" >
                         
                         <div class="form-outline mb-4">
                             <label class="form-label" for="categoryName">Category name</label>
-                            <input type="text" id="categoryName" class="form-control" name="catName" value="<?= $category['cat_name']; ?>" required>
+                            <input type="text" id="categoryName" class="form-control" name="catName"  required>
                         </div>
 
                         <div class="mb-3">
@@ -155,9 +155,8 @@
                             <input class="form-control" type="file" id="uploadedFile" name="catImg" accept="image/*">
                         </div>
 
-                        <button type="modify" class="btn btn-primary btn-block w-25 mb-4" name="modify_category">Modify Category</button>
+                        <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="modify_category">Modify Category</button>
                     </form>
-
 
 
                     

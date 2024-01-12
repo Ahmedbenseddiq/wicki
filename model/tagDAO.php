@@ -10,6 +10,13 @@ class TagDAO{
         $this->db = Database::getInstance();        
     }
 
+    public function deletetag($categoryId)
+    {
+        $stmt = $this->db->prepare("DELETE FROM tags WHERE tag_id = :id");
+        $stmt->bindParam(":id", $categoryId);
+        $stmt->execute();
+    }
+    
     public function insertTag($tag_name){
         $stmt = $this->db->prepare("INSERT INTO tags (tag_name) VALUES( :tag_name)");
         $stmt->bindParam(":tag_name",$tag_name);
