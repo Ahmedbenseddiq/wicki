@@ -17,6 +17,23 @@ class WikiDAO{
         return $result;
     }
 
+    public function get_wikis_by_category($cat_id) {
+        // Use a prepared statement to avoid SQL injection
+        $stmt = $this->db->prepare("SELECT * FROM wikis WHERE cat_id = :cat_id ORDER BY wiki_date LIMIT 6;");
+        
+        // Bind the parameter
+        $stmt->bindParam(':cat_id', $cat_id, PDO::PARAM_INT);
+        
+        // Execute the prepared statement
+        $stmt->execute();
+        
+        // Fetch all rows as an associative array
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $result;
+    }
+    
+
 
     public function insertWiki($title,$content,$image,$user_id,$cat_id){
         $stmt = $this->db->prepare("INSERT INTO wikis (titre,contenu,image,user_id,cat_id,wiki_date) VALUES(:titre,:contenu,:image,:userid,:catid,CURRENT_TIMESTAMP())");
