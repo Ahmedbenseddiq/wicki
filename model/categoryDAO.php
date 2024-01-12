@@ -18,8 +18,18 @@ class CategoryDAO{
         return $result;
     }
 
-    private function getImageData($category)
-{
+
+    public function getCatById($categoryId) {
+        $stmt = $this->db->prepare("SELECT * FROM categories WHERE cat_id = :id");
+        $stmt->bindParam(":id", $categoryId);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
+
+    private function getImageData($category){
     if (!empty($category['image'])) {
         return $category['image'];
     } else if (!empty($category['uploaded_file']['tmp_name'])) {
@@ -53,35 +63,21 @@ class CategoryDAO{
     }
 
 
-        public function updateCat($categoryId, $newCategoryName, $newImage)
-        {
-            try {
-                // Check if the category exists
-                $stmt = $this->db->prepare("SELECT * FROM categories WHERE cat_id = :id");
-                $stmt->bindParam(":id", $categoryId);
-                $stmt->execute();
-                $existingCategory = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function updateCat($categoryId, $newCategoryName, $newImage)
+    {
+        // Implement your logic to update the category here
+        // Use $categoryId, $newCategoryName, and $newImage as needed
 
-                if (!$existingCategory) {
-                    return false; // Category not found
-                }
+        // Example: Update category name and image
+        $stmt = $this->db->prepare("UPDATE categories SET cat_name = :new_name, image = :new_image WHERE cat_id = :category_id");
+        $stmt->bindParam(":new_name", $newCategoryName);
+        $stmt->bindParam(":new_image", $newImage);
+        $stmt->bindParam(":category_id", $categoryId);
 
-                // Prepare the update query
-                $updateQuery = "UPDATE categories SET cat_name = :name, image = :img WHERE cat_id = :id";
-                $updateStmt = $this->db->prepare($updateQuery);
-                $updateStmt->bindParam(":name", $newCategoryName);
-                $updateStmt->bindParam(":img", $newImage);
-                $updateStmt->bindParam(":id", $categoryId);
-
-                // Execute the update query
-                $updateStmt->execute();
-
-                return true; // Update successful
-            } catch (PDOException $e) {
-                
-                return false;
-            }
+        return $stmt->execute();
     }
+
+    
 
 
 }

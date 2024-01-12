@@ -1,6 +1,4 @@
-<?php
-    include_once '../controller/displaycategoriesController.php';
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -142,59 +140,27 @@
 
 
                     <div class="container m-auto">
+
                     
+                    <form method="post" action="../controller/modifyCategory.php">
+                        <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
+                        
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="categoryName">Category name</label>
+                            <input type="text" id="categoryName" class="form-control" name="catName" value="<?= $category['cat_name']; ?>" required>
+                        </div>
 
-                    <table class="table m-auto  w-75">
-                        <thead>
-                            <div class="d-flex justify-content-center" style="width: 45rem; margin-top: 65px;">
-                                <h3>Category list</h3>
-                            </div>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Category Name</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Management</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php foreach ($categories as $category): ?>
-                            <tr>
-                                <th scope="row"><?= $category['cat_id']; ?></th>
-                                <td><?= $category['cat_name']; ?></td>
-                                <td>
-                                    <?php
-                                    // Check if the image data is not null
-                                    if (!empty($category['image'])) {
-                                        $imageType = 'image/jpeg'; 
-                                        $base64Image = base64_encode($category['image']);
-                                        echo '<img src="data:' . $imageType . ';base64,' . $base64Image . '" alt="Category Image" style="max-width: 100px; max-height: 100px;">';
-                                    } else {
-                                        echo 'No Image';
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                  
-                                    
-                                    <div class="d-flex">
-                                        <form method="post" action="../controller/deleteCategory.php" class="mr-2">
-                                            <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                            <button type="submit" name="delete_category" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-                                        </form>
-                                        <form method="post" action="modifyCategory.php">
-                                            <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                            <button type="submit" name="modify_category" class="btn btn-success">Modify</button>
-                                        </form>
-                                    </div>
-                                
-                                    
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <div class="mb-3">
+                            <label for="uploadedFile" class="form-label">Upload Image</label>
+                            <input class="form-control" type="file" id="uploadedFile" name="catImg" accept="image/*">
+                        </div>
+
+                        <button type="modify" class="btn btn-primary btn-block w-25 mb-4" name="modify_category">Modify Category</button>
+                    </form>
 
 
-                        </tbody>
-                    </table>
+
+                    
                     </div>
 
 

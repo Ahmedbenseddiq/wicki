@@ -175,34 +175,36 @@
                                 <td><?= $category['cat_name']; ?></td>
                                 <td>
                                     <?php
-                                    // Check if the image data is not null
-                                    if (!empty($category['image'])) {
-                                        $imageType = 'image/jpeg';  // Change this based on your image type
-                                        $base64Image = base64_encode($category['image']);
-                                        echo '<img src="data:' . $imageType . ';base64,' . $base64Image . '" alt="Category Image" style="max-width: 100px; max-height: 100px;">';
-                                    } else {
-                                        echo 'No Image';
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <!-- Uncomment the form if you want to enable delete functionality -->
                                     
-                                    <div class="d-flex">
-                                        <form method="post" action="../controller/deleteCategory.php" class="mr-2">
-                                            <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                            <button type="submit" name="delete_category" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-                                        </form>
-                                        <form method="post" action="../controller/modifyCategory.php">
-                                            <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                            <button type="submit" name="modify_category" class="btn btn-success">Modify</button>
-                                        </form>
-                                    </div>
-                                
-                                    
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                                                if (!empty($category['image'])) {
+                                                    $imageType = 'image/jpeg';  // Change this based on your image type
+                                                    $base64Image = base64_encode($category['image']);
+                                                    echo '<img src="data:' . $imageType . ';base64,' . $base64Image . '" alt="Category Image" style="max-width: 100px; max-height: 100px;">';
+                                                } else {
+                                                    echo 'No Image';
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>
+                                                <!-- Uncomment the form if you want to enable delete and modify functionality -->
+                                                <div class="d-flex">
+                                                    <form method="post" action="../controller/deleteCategory.php" class="mr-2">
+                                                        <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
+                                                        <button type="submit" name="delete_category" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                                                    </form>
+                                                    <!-- Assuming this is inside a loop where $category is defined -->
+                                                    
+                                                    <a href="../view/modifyCategory.php?category_id=<?= $category['cat_id']; ?>" class="btn btn-success">Modify</a>
+
+
+
+
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
 
 
                         </tbody>
