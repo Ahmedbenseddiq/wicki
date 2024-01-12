@@ -9,6 +9,15 @@ class WikiDAO{
         $this->db = Database::getInstance();
     }
 
+
+    public function get_wikis() {
+        $stmt = $this->db->query("SELECT * FROM wikis ORDER BY wiki_date LIMIT 6;");
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
     public function insertWiki($title,$content,$image,$user_id,$cat_id){
         $stmt = $this->db->prepare("INSERT INTO wikis (titre,contenu,image,user_id,cat_id,wiki_date) VALUES(:titre,:contenu,:image,:userid,:catid,CURRENT_TIMESTAMP())");
         $stmt->bindParam(":titre",$title);
