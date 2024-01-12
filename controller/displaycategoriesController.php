@@ -17,7 +17,7 @@ require_once('../model/CategoryDAO.php');
 // Create CategoryDAO object
 $categoriesOBJ = new CategoryDAO();
 
-// Fetch categories with names and image data
+
 $categories = $categoriesOBJ->get_cats();
 // var_dump($categories);
 // Display categories

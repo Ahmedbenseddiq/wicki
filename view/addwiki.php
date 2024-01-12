@@ -1,6 +1,8 @@
 <?php
-    include_once '../controller/displaycategoriesController.php';
+    include_once '../controller/displaywiki.php';
+    include_once '../controller/displaytags.php';
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Categories</title>
+    <title>Wickis</title>
 
     
     
@@ -55,7 +57,7 @@
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="addwiki.php">
+                <a class="nav-link" href="add<iki.php">
                     <span>Wickis</span></a>
             </li>
 
@@ -144,66 +146,89 @@
                     <div class="container m-auto">
                     <form class="m-auto w-75" method="post" action="../controller/category.contr.php" enctype="multipart/form-data">
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="categoryName">Category name</label>
+                            <label class="form-label" for="categoryName">Wiki name</label>
                             <input type="text" id="categoryName" class="form-control" name="catName" required>
                         </div>
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="categoryName">Content</label>
+                            <textarea type="text" id="categoryName" class="form-control" name="catName" required></textarea>
+                        </div>
+                        <label>Tags:</label><br>
 
-                        <div class="mb-3">
+                        <ul>
+                            <?php foreach ($tags as $tag): ?>
+                                <input type="checkbox" id="tag<?= $tag['tag_id']; ?>" name="existing_tags[]" value="<?= $tag['tag_id']; ?>">
+                                <label class="btn btn-outline-primary" for="tag<?= $tag['tag_id']; ?>"><?= $tag['tag_name']; ?></label>
+                            <?php endforeach; ?>
+                        </ul>
+
+
+                            php
+                            Copy code
+                            <?php
+                            include_once '../controller/displaywiki.php';
+                            include_once '../controller/displaytags.php';
+                        ?>
+                            <label for="category_id">Select Category:</label>
+                            <select name="category_id" id="category_id" class="form-control">
+                                <?php foreach ($categories as $category): ?>
+                                    <option value="<?= $category['cat_id']; ?>"><?= $category['cat_name']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        <div class="mb-3">  
                             <label for="uploadedFile" class="form-label">Upload Image</label>
                             <input class="form-control" type="file" id="uploadedFile" name="catImg" required accept="image/*">
                         </div>
+                        
 
                         <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Category</button>
                     </form>
 
-                    <table class="table m-auto  w-75">
+                    <table class="table m-auto w-75">
                         <thead>
                             <div class="d-flex justify-content-center" style="width: 45rem; margin-top: 65px;">
-                                <h3 class="mb-3">Category list</h3>
+                                <h3 class="mb-3">Wiki list</h3>
                             </div>
                             <tr>
                                 <!-- <th scope="col">#</th> -->
-                                <th scope="col">Category Name</th>
-                                <th scope="col">Image</th>
+                                <th scope="col">Wiki Title</th>
+                                <th scope="col">Content</th>
+                                <th scope="col">category</th>
                                 <th scope="col">Management</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($categories as $category): ?>
+                            <?php foreach ($wikis as $wiki): ?>
                                 <tr>
-                                    <!-- <th scope="row"><?= $category['cat_id']; ?></th> -->
-                                    <td><?= $category['cat_name']; ?></td>
+                                    <!-- <th scope="row"><?= $wiki['wiki_id']; ?></th> -->
+                                    <td><?= $wiki['titre']; ?></td>
+                                    <td><?= $wiki['contenu']; ?></td>
                                     <td>
                                         <?php
-                                        
-                                                    if (!empty($category['image'])) {
-                                                        $imageType = 'image/jpeg';  // Change this based on your image type
-                                                        $base64Image = base64_encode($category['image']);
-                                                        echo '<img src="data:' . $imageType . ';base64,' . $base64Image . '" alt="Category Image" style="max-width: 100px; max-height: 100px;">';
-                                                    } else {
-                                                        echo 'No Image';
-                                                    }
-                                                    ?>
+                                        // Assuming you have a CategoryDAO class with a getCategoryById method
+                                        $categoryDAO = new CategoryDAO();
+                                        $category = $categoryDAO->getCatById($wiki['cat_id']);
+
+                                        // Display category name if found, otherwise display 'Unknown' or handle it as needed
+                                        echo $category ? $category['cat_name'] : 'Unknown';
+                                        ?>
                                     </td>
                                     <td>
-                                                
                                         <div class="d-flex">
-                                            <form method="post" action="../controller/deleteCategory.php" class="mr-2">
-                                                <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                                <button type="submit" name="delete_category" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                                            <form method="post" action="../controller/deleteWiki.php" class="mr-2">
+                                                <input type="hidden" name="wiki_id" value="<?= $wiki['wiki_id']; ?>">
+                                                <button type="submit" name="delete_wiki" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wiki?')">Delete</button>
                                             </form>
-                                        
-                                            <a href="../view/modifyCategory.php?category_id=<?= $category['cat_id']; ?>" class="btn btn-success">Modify</a>
+                                            <a href="../view/modifyWiki.php?wiki_id=<?= $wiki['wiki_id']; ?>" class="btn btn-success">Modify</a>
                                         </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+
                 </div>
 
-
- 
                 </div>
             </div>
             

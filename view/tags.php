@@ -55,7 +55,7 @@
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="wikis.php">
+                <a class="nav-link" href="addwiki.php">
                     <span>Wickis</span></a>
             </li>
 

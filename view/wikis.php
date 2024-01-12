@@ -57,30 +57,30 @@ require_once '../controller/displaywikisController.php';
 
      
       <section class="pt-5" id="wikis">
-    <div class="container">
-        <h1 class="fw-bold fs-6 mb-3">Discover wikis</h1>
-        <?php if (!empty($wikis)): ?>
-            <p class="mb-6 text-secondary">Explore a diverse spectrum of wikis, offering a wide array of information to discover.</p>
-            <div class="row">
-                <?php foreach ($wikis as $wiki): ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <div class="card-body ps-0">
-                                <!-- Assuming you have an image column in your wikis table -->
-                                <img src="assets/img/wiki/<?php echo $wiki['wiki_image']; ?>" class="card-img-top" alt="Wiki Image">
-                                <h5 class="fw-bold"><?php echo $wiki['wiki_title']; ?></h5>
-                                <p><?php echo $wiki['wiki_content']; ?></p>
-                                <a href="wiki.php?id=<?php echo $wiki['wiki_id']; ?>" class="fw-bold">Explore</a>
+            <div class="container">
+                <h1 class="fw-bold fs-6 mb-3">Discover wikis</h1>
+                <?php if (!empty($wikis)): ?>
+                    <p class="mb-6 text-secondary">Explore a diverse spectrum of wikis, offering a wide array of information to discover.</p>
+                    <div class="row">
+                        <?php foreach ($wikis as $wiki): ?>
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-body ps-0">
+                                        <!-- Assuming you have an image column in your wikis table -->
+                                        <img src="assets/img/wiki/<?php echo $wiki['image']; ?>" class="card-img-top" alt="Wiki Image">
+                                        <h5 class="fw-bold"><?php echo $wiki['titre']; ?></h5>
+                                        <p><?php echo $wiki['contenu']; ?></p>
+                                        <a href="singleWiki.php?id=<?php echo $wiki['wiki_id']; ?>" class="fw-bold">Explore</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No wikis found in this category</p>
+                <?php endif; ?>
             </div>
-        <?php else: ?>
-            <p>No wikis found in this category</p>
-        <?php endif; ?>
-    </div>
-</section>
+        </section>
 
 
 

@@ -48,6 +48,7 @@ class CategoryDAO{
         $stmt->execute();
     }
     
+    
     public function deleteCat($categoryId)
     {
         $stmt = $this->db->prepare("DELETE FROM categories WHERE cat_id = :id");
