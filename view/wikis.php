@@ -1,6 +1,6 @@
 <?php
 require_once '../controller/displaywikisController.php';
-
+include_once '../controller/count.php';
 ?>
 
 <!DOCTYPE html>

@@ -1,6 +1,7 @@
 <?php
     include_once '../controller/displaywiki.php';
     include_once '../controller/displaytags.php';
+    include_once '../controller/count.php';
 ?>
 
 
@@ -82,6 +83,16 @@
                     </div>
 
 
+                    <?php
+                    if (isset($_SESSION['error'])) {
+                        echo '<div class="alert alert-danger" role="alert">';
+                        echo $_SESSION['error'];
+                        echo '</div>';
+
+                        
+                        unset($_SESSION['error']);
+                    }
+                    ?>
                     <div class="row mb-5">
                         <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -90,7 +101,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Categories</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">...</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo $categoryCount  ; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -108,7 +119,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Tags</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">...</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $tagCount?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -127,7 +138,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
                                                 wikis</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">...</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $wikiCount?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -144,7 +155,7 @@
 
 
                     <div class="container m-auto">
-                    <form class="m-auto w-75" method="post" action="../controller/category.contr.php" enctype="multipart/form-data">
+                    <!-- <form class="m-auto w-75" method="post" action="../controller/wiki.contr.php" enctype="multipart/form-data">
                         <div class="form-outline mb-4">
                             <label class="form-label" for="categoryName">Wiki name</label>
                             <input type="text" id="categoryName" class="form-control" name="catName" required>
@@ -163,12 +174,8 @@
                         </ul>
 
 
-                            php
-                            Copy code
-                            <?php
-                            include_once '../controller/displaywiki.php';
-                            include_once '../controller/displaytags.php';
-                        ?>
+                       
+                            
                             <label for="category_id">Select Category:</label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <?php foreach ($categories as $category): ?>
@@ -182,7 +189,7 @@
                         
 
                         <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Category</button>
-                    </form>
+                    </form> -->
 
                     <table class="table m-auto w-75">
                         <thead>
@@ -217,9 +224,9 @@
                                         <div class="d-flex">
                                             <form method="post" action="../controller/deleteWiki.php" class="mr-2">
                                                 <input type="hidden" name="wiki_id" value="<?= $wiki['wiki_id']; ?>">
-                                                <button type="submit" name="delete_wiki" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this wiki?')">Delete</button>
+                                                <button type="submit" name="delete_wiki" class="btn btn-danger" onclick="return confirm('Are you sure you want to archieve this wiki?')">Archieve</button>
                                             </form>
-                                            <a href="../view/modifyWiki.php?wiki_id=<?= $wiki['wiki_id']; ?>" class="btn btn-success">Modify</a>
+                                            
                                         </div>
                                     </td>
                                 </tr>

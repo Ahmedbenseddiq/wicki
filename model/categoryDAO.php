@@ -59,7 +59,7 @@ class CategoryDAO{
     public function countCategories(){
         $stmt = $this->db->query("SELECT count(cat_id) as count FROM `categories`;");
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_COLUMN ,0);
         return $result; 
     }
 

@@ -27,7 +27,7 @@ class TagDAO{
     public function countTags(){
         $stmt = $this->db->query("SELECT count(tag_id) as count FROM `tags`;");
         $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_COLUMN,0);
         return $result; 
     }
     public function getTags(){
@@ -35,5 +35,17 @@ class TagDAO{
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    public function associateTagWithWiki($tagId, $wikiId) {
+
+        $query = "INSERT INTO wiki_tags (tag_id, wiki_id) VALUES (?, ?)";
+        
+ 
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$tagId, $wikiId]);
+        
+
+        return $stmt->rowCount() > 0;
     }
 }
