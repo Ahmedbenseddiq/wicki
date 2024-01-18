@@ -1,5 +1,5 @@
 <?php
-    include_once '../controller/displaytags.php';
+    include_once '../controller/tag.contr.php';
     include_once '../controller/count.php';
 ?>
 
@@ -46,18 +46,25 @@
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="admin.php">
+                <a class="nav-link" href="admin_category.php">
                     <span>Categories </span></a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="tags.php">
+                <a class="nav-link" href="admin_tag.php">
                     <span> Tags</span></a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="addwiki.php">
+                <a class="nav-link" href="admin_wiki.php">
                     <span>Wickis</span></a>
+            </li>
+            <li class="nav-item active">
+            <form action="../controller/logout.contr.php" method="post">
+                <button type="submit" class="nav-link" name="logout">
+                    <span>Log out</span>
+                </button>
+            </form>
             </li>
 
             <hr class="sidebar-divider">
@@ -169,13 +176,13 @@
 
 
                     <div class="container m-auto">
-                    <form class="m-auto w-75" method="post" action="../controller/tag.contr.php" enctype="multipart/form-data">
+                    
+                    <form class="m-auto w-75" method="post" action="../controller/tag.contr.php" enctype="multipart/form-data" onsubmit="return validateForm()">
                         <div class="form-outline mb-4">
                             <label class="form-label" for="categoryName">Tag name</label>
                             <input type="text" id="categoryName" class="form-control" name="tagName" required>
+                            <div id="tagNameError" class="text-danger"></div> <!-- Error message container -->
                         </div>
-
-                       
 
                         <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Tag</button>
                     </form>
@@ -196,11 +203,11 @@
                                     <td><?= $tag['tag_name']; ?></td>
                                     <td>
                                         <div class="d-flex">
-                                        <form method="post" action="../controller/deleteTag.php" class="mr-2">
+                                        <form method="post" action="../controller/tag.contr.php" class="mr-2">
                                             <input type="hidden" name="tag_id" value="<?= $tag['tag_id']; ?>">
                                             <button type="submit" name="delete_tag" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this tag?')">Delete</button>
                                         </form>
-                                        <a href="../view/modifyTag.php?tag_id=<?= $tag['tag_id']; ?>" class="btn btn-success">Modify</a>
+                                        <a href="../view/editTag.php?tag_id=<?= $tag['tag_id']; ?>" class="btn btn-success">Modify</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -216,7 +223,7 @@
                 </div>
             </div>
             
-            <footer class="sticky-footer bg-white">
+            <footer class="sticky-footer bg-white mt-5">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; wikizone 2024</span>
@@ -230,7 +237,24 @@
 
     </div>
         
+    <script>
+        function validateForm() {
+            var tagNameInput = document.getElementById('categoryName');
+            var tagNameValue = tagNameInput.value.trim();
+            var tagNameError = document.getElementById('tagNameError');
 
+            var regex = /^#/;
+
+            if (!regex.test(tagNameValue)) {
+
+                tagNameError.innerText = 'Tag name must begin with #';
+                return false; 
+            } else {
+                tagNameError.innerText = '';
+            }
+            return true;
+        }
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

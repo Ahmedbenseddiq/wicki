@@ -11,6 +11,7 @@ class CategoryDAO{
         
     }
 
+    
     public function get_cats() {
         $stmt = $this->db->query("SELECT * FROM categories;");
         $stmt->execute();
@@ -64,21 +65,17 @@ class CategoryDAO{
     }
 
 
-    public function updateCat($categoryId, $newCategoryName, $newImage)
-    {
-        // Implement your logic to update the category here
-        // Use $categoryId, $newCategoryName, and $newImage as needed
-
-        // Example: Update category name and image
-        $stmt = $this->db->prepare("UPDATE categories SET cat_name = :new_name, image = :new_image WHERE cat_id = :category_id");
-        $stmt->bindParam(":new_name", $newCategoryName);
-        $stmt->bindParam(":new_image", $newImage);
-        $stmt->bindParam(":category_id", $categoryId);
-
-        return $stmt->execute();
-    }
-
+    public function update_category($cat_id, $cat_name, $img) {
+        if ($img === null) {
+            $stmt = $this->db->prepare("UPDATE categories SET cat_name = :cat_name WHERE cat_id = :cat_id");
+        } else {
+            $stmt = $this->db->prepare("UPDATE categories SET cat_name = :cat_name, image = :img WHERE cat_id = :cat_id");
+            $stmt->bindParam(":img", $img);
+        }
     
-
-
+        $stmt->bindParam(":cat_id", $cat_id);
+        $stmt->bindParam(":cat_name", $cat_name);
+        $stmt->execute();
+    }
+    
 }

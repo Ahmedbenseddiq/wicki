@@ -1,6 +1,6 @@
 <?php
-    include_once '../controller/displaywiki.php';
-    include_once '../controller/displaytags.php';
+    include_once '../controller/wiki.contr.php';
+
     include_once '../controller/count.php';
 ?>
 
@@ -48,18 +48,25 @@
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="tags.php">
+                <a class="nav-link" href="admin_category.php">
                     <span>Categories </span></a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="tags.php">
+                <a class="nav-link" href="admin_tag.php">
                     <span> Tags</span></a>
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="add<iki.php">
+                <a class="nav-link" href="admin_wiki.php">
                     <span>Wickis</span></a>
+            </li>
+            <li class="nav-item active">
+            <form action="../controller/logout.contr.php" method="post">
+                <button type="submit" class="nav-link" name="logout">
+                    <span>Log out</span>
+                </button>
+            </form>
             </li>
 
             <hr class="sidebar-divider">
@@ -82,17 +89,7 @@
                         
                     </div>
 
-
-                    <?php
-                    if (isset($_SESSION['error'])) {
-                        echo '<div class="alert alert-danger" role="alert">';
-                        echo $_SESSION['error'];
-                        echo '</div>';
-
-                        
-                        unset($_SESSION['error']);
-                    }
-                    ?>
+                    
                     <div class="row mb-5">
                         <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -155,41 +152,7 @@
 
 
                     <div class="container m-auto">
-                    <!-- <form class="m-auto w-75" method="post" action="../controller/wiki.contr.php" enctype="multipart/form-data">
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="categoryName">Wiki name</label>
-                            <input type="text" id="categoryName" class="form-control" name="catName" required>
-                        </div>
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="categoryName">Content</label>
-                            <textarea type="text" id="categoryName" class="form-control" name="catName" required></textarea>
-                        </div>
-                        <label>Tags:</label><br>
-
-                        <ul>
-                            <?php foreach ($tags as $tag): ?>
-                                <input type="checkbox" id="tag<?= $tag['tag_id']; ?>" name="existing_tags[]" value="<?= $tag['tag_id']; ?>">
-                                <label class="btn btn-outline-primary" for="tag<?= $tag['tag_id']; ?>"><?= $tag['tag_name']; ?></label>
-                            <?php endforeach; ?>
-                        </ul>
-
-
-                       
-                            
-                            <label for="category_id">Select Category:</label>
-                            <select name="category_id" id="category_id" class="form-control">
-                                <?php foreach ($categories as $category): ?>
-                                    <option value="<?= $category['cat_id']; ?>"><?= $category['cat_name']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        <div class="mb-3">  
-                            <label for="uploadedFile" class="form-label">Upload Image</label>
-                            <input class="form-control" type="file" id="uploadedFile" name="catImg" required accept="image/*">
-                        </div>
-                        
-
-                        <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Category</button>
-                    </form> -->
+                   
 
                     <table class="table m-auto w-75">
                         <thead>
@@ -201,6 +164,7 @@
                                 <th scope="col">Wiki Title</th>
                                 <th scope="col">Content</th>
                                 <th scope="col">category</th>
+                                <th scope="col">status</th>
                                 <th scope="col">Management</th>
                             </tr>
                         </thead>
@@ -210,6 +174,8 @@
                                     <!-- <th scope="row"><?= $wiki['wiki_id']; ?></th> -->
                                     <td><?= $wiki['titre']; ?></td>
                                     <td><?= $wiki['contenu']; ?></td>
+                                    
+                                    
                                     <td>
                                         <?php
                                         // Assuming you have a CategoryDAO class with a getCategoryById method
@@ -220,13 +186,13 @@
                                         echo $category ? $category['cat_name'] : 'Unknown';
                                         ?>
                                     </td>
+                                    <td><?= $wiki['status']; ?></td>
                                     <td>
                                         <div class="d-flex">
-                                            <form method="post" action="../controller/deleteWiki.php" class="mr-2">
+                                            <form method="post" action="../controller/wiki.contr.php" class="mr-2">
                                                 <input type="hidden" name="wiki_id" value="<?= $wiki['wiki_id']; ?>">
-                                                <button type="submit" name="delete_wiki" class="btn btn-danger" onclick="return confirm('Are you sure you want to archieve this wiki?')">Archieve</button>
+                                                <button type="submit" name="archieve" class="btn btn-secondary">hide/show</button>
                                             </form>
-                                            
                                         </div>
                                     </td>
                                 </tr>

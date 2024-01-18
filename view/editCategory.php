@@ -1,7 +1,6 @@
 <?php
-    include_once '../controller/displaycategoriesController.php';
+    include_once '../controller/category.contr.php';
     include_once '../controller/count.php';
-    
 ?>
 
 <!DOCTYPE html>
@@ -15,24 +14,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Categories</title>
+    <title>Dashboard</title>
 
     
     
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+
     <link href="assets/css/sb-admin-2.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
 </head>
 
-<body id="page-top">
+<body id="page-top"> 
 
-
-    <div id="wrapper">
+<div id="wrapper">
 
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -47,7 +43,7 @@
 
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="tags.php">
+                <a class="nav-link" href="admin.php">
                     <span>Categories </span></a>
             </li>
             <hr class="sidebar-divider my-0">
@@ -57,7 +53,7 @@
             </li>
             <hr class="sidebar-divider my-0">
             <li class="nav-item active">
-                <a class="nav-link" href="addwiki.php">
+                <a class="nav-link" href="wikis.php">
                     <span>Wickis</span></a>
             </li>
 
@@ -77,19 +73,11 @@
 
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Statistics</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                         
                     </div>
-                    <?php
-                    if (isset($_SESSION['error'])) {
-                        echo '<div class="alert alert-danger" role="alert">';
-                        echo $_SESSION['error'];
-                        echo '</div>';
 
-                        // Clear the error message to prevent displaying it again on page reload
-                        unset($_SESSION['error']);
-                    }
-                    ?>
+
                     <div class="row mb-5">
                         <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-primary shadow h-100 py-2">
@@ -98,7 +86,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Categories</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo $categoryCount  ; ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $categoryCount  ; ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -151,80 +139,37 @@
                     </div>
 
 
-                    <div class="container m-auto">
-                    <form class="m-auto w-75" method="post" action="../controller/category.contr.php" enctype="multipart/form-data">
+                    <div class="container w-75 m-auto">
+
+                    
+                    <form method="post" action="../controller/category.contr.php" enctype="multipart/form-data">
+
+                        <?php
+                            
+                            $cat_id = $_GET['cat_id'];
+                            $category = $categoriesOBJ->getCatById($cat_id);
+                        ?>
+
+                        <input type="hidden" name="cat_id" value="<?= $category['cat_id']; ?>">
+
                         <div class="form-outline mb-4">
                             <label class="form-label" for="categoryName">Category name</label>
-                            <input type="text" id="categoryName" class="form-control" name="catName" required>
+                            <input type="text" id="categoryName" class="form-control" name="cat_name" value="<?= $category['cat_name']; ?>" required>
                         </div>
 
                         <div class="mb-3">
                             <label for="uploadedFile" class="form-label">Upload Image</label>
-                            <input class="form-control" type="file" id="uploadedFile" name="catImg" required accept="image/*">
+                            <input class="form-control" type="file" id="uploadedFile" name="cat_image" accept="image/*">
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="add">Add Category</button>
+                        <button type="submit" class="btn btn-primary btn-block w-25 mb-4" name="update">Modify Category</button>
                     </form>
 
-                    <div class="container w-75 m-auto">
-                    <?php
-                    if (isset($_SESSION['error'])) {
-                        echo '<div class="alert alert-danger" role="alert">';
-                        echo $_SESSION['error'];
-                        echo '</div>';
 
-                        // Clear the error message to prevent displaying it again on page reload
-                        unset($_SESSION['error']);
-                    }
-                    ?>
+                    
                     </div>
 
-                    <table class="table m-auto  w-75">
-                        <thead>
-                            <div class="d-flex justify-content-center" style="width: 45rem; margin-top: 65px;">
-                                <h3 class="mb-3">Category list</h3>
-                            </div>
-                            <tr>
-                                <!-- <th scope="col">#</th> -->
-                                <th scope="col">Category Name</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Management</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($categories as $category): ?>
-                                <tr>
-                                    <!-- <th scope="row"><?= $category['cat_id']; ?></th> -->
-                                    <td><?= $category['cat_name']; ?></td>
-                                    <td>
-                                        <?php
-                                        
-                                                    if (!empty($category['image'])) {
-                                                        $imageType = 'image/jpeg';  // Change this based on your image type
-                                                        $base64Image = base64_encode($category['image']);
-                                                        echo '<img src="data:' . $imageType . ';base64,' . $base64Image . '" alt="Category Image" style="max-width: 100px; max-height: 100px;">';
-                                                    } else {
-                                                        echo 'No Image';
-                                                    }
-                                                    ?>
-                                    </td>
-                                    <td>
-                                                
-                                        <div class="d-flex">
-                                            <form method="post" action="../controller/deleteCategory.php" class="mr-2">
-                                                <input type="hidden" name="category_id" value="<?= $category['cat_id']; ?>">
-                                                <button type="submit" name="delete_category" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-                                            </form>
-                                        
-                                            <a href="../view/modifyCategory.php?category_id=<?= $category['cat_id']; ?>" class="btn btn-success">Modify</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-
+                    
 
  
                 </div>

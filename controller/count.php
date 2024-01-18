@@ -15,8 +15,5 @@ $categoryCount = $categoriesOBJ->countCategories();
 $tagCount = $tagsOBJ->countTags();
 $wikiCount = $wikiDAO->CountWikis();
 
-
-
-// Pass counts to the view
 // include('../view/admin.php');
 ?>

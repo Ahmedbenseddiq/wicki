@@ -46,7 +46,7 @@ if(isset($_POST['register'])){
         var_dump($result);
         if($result) {
             // Redirect to categories.php after successful registration
-            header('Location: ../view/categories.php');
+            header('Location: ../view/author.php');
             exit();
         } else {
             

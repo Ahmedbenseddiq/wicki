@@ -1,4 +1,5 @@
-<?php require_once '../controller/displaycategoriesController.php'; ?>
+<?php require_once '../controller/category.contr.php'; 
+session_start();?>
 
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
@@ -109,7 +110,6 @@
                             ?>
                             <h5 class="fw-bold"><?php echo $category['cat_name']; ?></h5>
                             <!-- Append the category ID as a query parameter to the URL -->
-                            <a href="wikis.php?cat_id=<?php echo $category['cat_id']; ?>" class="fw-bold">Explore</a>
                         </div>
                     </div>
                 </div>
@@ -117,6 +117,30 @@
         </div>
     </div>
 </section>
+
+
+<section class="pt-5" id="marketing">
+        <div class="container">
+            <h1 class="fw-bold fs-6 mb-3">Discover our latest wikis</h1>
+                <p class="mb-6 text-secondary">Explore a diverse spectrum of categories, offering a wide array of information to discover.</p>
+                <div class="col-sm-5 mb-5 " >
+                  <input type="search" class="form-control" id="keywordInput" placeholder="search blog">
+                </div>
+                <div class="row" id="data">
+                   
+                
+                  
+                </div>
+
+                <nav aria-label="..." class=" d-flex  justify-content-center mt-4  w-100 ">
+                  <ul class="pagination " id="paginate">
+            
+                  
+                  </ul>
+                </nav>
+     
+        </div>
+    </section>
 
 
 
@@ -146,7 +170,8 @@
 
 
 
-   
+    <script src="ajax/affiche_wikis.js"></script>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
     
     <script src="assets\js\theme.js"></script>
